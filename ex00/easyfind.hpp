@@ -10,7 +10,7 @@ class cont : public std::exception
 
 
 template <typename T>
-typename T::iterator easyfind(T n, int x)
+typename T::iterator easyfind(T &n, int x)
 {
     if (n.empty())
         throw cont();
