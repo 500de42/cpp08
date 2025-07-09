@@ -5,6 +5,17 @@ Span::Span(unsigned int N) : limit(N)
 
 }
 
+Span::Span(const Span &copy) : limit(copy.limit)
+{
+    std::copy(copy.tab.begin(), copy.tab.end(), this->tab.begin());
+}
+
+Span &Span::operator=(const Span &src)
+{
+    std::copy(src.tab.begin(), src.tab.end(), this->tab.begin());
+    this->limit = src.limit;
+    return *this;
+}
 
 void Span::addNumber(int nb)
 {
@@ -20,30 +31,6 @@ int Span::longestSpan()
     std::sort(tab.begin(), tab.end());
     return tab.back() - tab.front();
 }
-
-// int Span::shortestSpan()
-// {
-//     if (this->tab.size() <= 1)
-//         throw Span::contentTooLow();
-//     int rang = 2147483647;
-//     for(std::vector<int>::iterator i = tab.begin(); i != tab.end(); i++)
-//     {
-//         for(std::vector<int>::iterator it = i; it != tab.end(); it++)
-//         {
-//             if (*i > *it)
-//             {
-//                 if (*i - *it < rang)
-//                     rang = *i - *it;
-//             }
-//             else
-//             {
-//                 if (*it - *i < rang)
-//                     rang = *it - *i;
-//             }
-//         }
-//     }
-//     return rang;
-// }
 
 int Span::shortestSpan()
 {
@@ -62,6 +49,15 @@ int Span::shortestSpan()
         ++it2;
     }
     return range;
+}
+
+void Span::printTab()
+{
+    for (std::vector<int>::iterator i = tab.begin(); i != tab.end(); i++)
+    {
+        std::cout << *i << std::endl;
+    }
+    std::cout << std::distance(tab.begin(), tab.end()) << std::endl;
 }
 
 const char *Span::contentTooLow::what() const throw()
